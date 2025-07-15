@@ -1,0 +1,117 @@
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "display": {
+        "separator": " ➜ "
+    },
+    // "logo": {
+    //     "color": {
+    //         "1": "blue",
+    //         "2": "blue"
+    //     }
+    // },
+    "modules": [
+        {
+            "type": "title"
+        },
+        "break",
+        {
+            "format": "\u001b[93m┌────────────────────────────────────────────────────────────┐",
+            "type": "custom"
+        },
+        {
+            "key": " ",
+            "keycolor": "blue",
+            "type": "os"
+        },
+        {
+            "key": " ",
+            "keycolor": "blue",
+            "type": "kernel"
+        },
+        {
+            "key": " ",
+            "keycolor": "blue",
+            "type": "de"
+        },
+        {
+            "key": " 󰏖",
+            "keycolor": "blue",
+            "type": "packages"
+        },
+        {
+            "format": "\u001b[93m├─────────────────────────────────────────────────────────────┤",
+            "type": "custom"
+        },
+        {
+            "key": " 󰻠",
+            "keycolor": "yellow",
+            "type": "cpu"
+        },
+        {
+            "key": " 󰍛",
+            "keycolor": "yellow",
+            "type": "gpu"
+        },
+        {
+            "key": " 󰑭",
+            "keycolor": "yellow",
+            "type": "memory"
+        },
+        {
+            "key": " ",
+            "keycolor": "yellow",
+            "type": "disk"
+        },
+        {
+            "key": " 󰍹",
+            "keycolor": "yellow",
+            "type": "display"
+        },
+        {
+            "key": " ",
+            "keycolor": "yellow",
+            "type": "wm"
+        },
+        {
+            "key": " ",
+            "keycolor": "yellow",
+            "type": "battery"
+        },
+        {
+            "format": "\u001b[93m├─────────────────────────────────────────────────────────────┤",
+            "type": "custom"
+        },
+        {
+            "key": " 󰅐",
+            "keycolor": "cyan",
+            "type": "uptime"
+        },
+        {
+            "key": " ",
+            "keycolor": "cyan",
+            "type": "terminal"
+        },
+        {
+            "key": " ",
+            "keycolor": "cyan",
+            "type": "shell"
+        },
+        {
+            "key": " 󰝚",
+            "keycolor": "cyan",
+            "type": "media"
+        },
+        {
+            "format": "\u001b[93m└────────────────────────────────────────────────────────────┘",
+            "type": "custom"
+        },
+        {
+            "block": {
+                "width": 10
+            },
+            "paddingLeft": 24,
+            "symbol": "circle",
+            "type": "colors"
+        }
+    ]
+}
