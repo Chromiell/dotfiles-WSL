@@ -1,0 +1,8 @@
+*
+!.zshrc
+!fastfetch.jsonc
+!manjaro-zsh-config
+!.oh-my-zsh/**
+!.oh-my-zsh/
+!README.md
+!.gitignore
