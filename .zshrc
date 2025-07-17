@@ -99,7 +99,7 @@ git_prompt() {
         branch="${branch_truncated}..."
     fi
 
-    [ -n "$branch" ] && echo " (⎇ ${branch})"
+    [ -n "$branch" ] && echo " ( ${branch})"
 }
 
 configure_prompt() {
