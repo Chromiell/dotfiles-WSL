@@ -1,4 +1,5 @@
 # Zsh config for WSL
+![Example screenshot](example.png)
 Run the following command (Debian/Ubuntu) to install Zsh:
 ```bash
 sudo apt install zsh zsh-autosuggestions zsh-syntax-highlighting
