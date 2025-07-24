@@ -23,7 +23,7 @@ You can also change the default shell for the `root` user by running the followi
 sudo chsh -s <shell>
 ```
 ## Install fastfetch (optional)
-The zsh init script automatically runs `fastfetch`, if you don-t have `fastfetch` installed it will throw an error. Since Debian Trixie `fastfetch` is present inside the default Debian repos, on Ubuntu and previous versions of Debian you have to manually install it. For Ubuntu systems you can install it by running:
+The zsh init script automatically runs `fastfetch`, if you don't have `fastfetch` installed it will throw an error. Since Debian Trixie `fastfetch` is present inside the default Debian repos, on Ubuntu and previous versions of Debian you have to manually install it. For Ubuntu systems you can install it by running:
 
 ```bash
 sudo add-apt-repository ppa:zhangsongcui3371/fastfetch
