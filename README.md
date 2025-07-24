@@ -8,26 +8,34 @@ and git clone this repo in your `$HOME` directory.
 
 ## Change default shell to Zsh
 Run the following command to list all available shells:
-```
+```bash
 cat /etc/shells
 ```
 this should output a list of all available shells on the system, including `/bin/zsh`.
 
 Change the default shell for the current user with:
-```
+```bash
 chsh -s <shell>
 ```
 ---
 You can also change the default shell for the `root` user by running the following command:
-```
+```bash
 sudo chsh -s <shell>
+```
+## Install fastfetch (optional)
+The zsh init script automatically runs `fastfetch`, if you don-t have `fastfetch` installed it will throw an error. Since Debian Trixie `fastfetch` is present inside the default Debian repos, on Ubuntu and previous versions of Debian you have to manually install it. For Ubuntu systems you can install it by running:
+
+```bash
+sudo add-apt-repository ppa:zhangsongcui3371/fastfetch
+sudo apt update
+sudo apt install fastfetch
 ```
 ## Change settings to Windows terminal to display Nerd Fonts
 Install FiraCode Nerd Font from [https://www.nerdfonts.com/font-downloads](https://www.nerdfonts.com/font-downloads).
 
 Edit the JSON settings of Windows Terminal to the following:
 
-```JSON
+```json
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
