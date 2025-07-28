@@ -45,7 +45,7 @@ sudo apt install fastfetch
 
 ## Change settings to Windows terminal to display Nerd Fonts
 
-Install FiraCode Nerd Font from [https://www.nerdfonts.com/font-downloads](https://www.nerdfonts.com/font-downloads).
+Install the `AdwaitaMono Nerd Font Mono` from this repository: [https://github.com/ryanoasis/nerd-fonts/releases](https://github.com/ryanoasis/nerd-fonts/releases), download the `AdwaitaMono.zip` file, extract it and install all the fonts contained within.
 
 Edit the JSON settings of Windows Terminal to the following:
 
@@ -125,7 +125,7 @@ Edit the JSON settings of Windows Terminal to the following:
       {
         "colorScheme": "Custom Scheme",
         "font": {
-          "face": "FiraCode Nerd Font Mono"
+          "face": "AdwaitaMono Nerd Font Mono"
         },
         "guid": "{3c87b3bb-e8d2-5ab7-9aa3-e26422320d80}",
         "hidden": false,
