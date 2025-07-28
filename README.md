@@ -170,4 +170,3 @@ Edit the JSON settings of Windows Terminal to the following:
   "themes": []
 }
 ```
-
