@@ -134,10 +134,14 @@ Edit the JSON settings of Windows Terminal to the following:
         "source": "Microsoft.WSL"
       },
       {
-        "colorScheme": "Tango Dark",
+        "colorScheme": "Custom Scheme",
+        "font": {
+          "face": "AdwaitaMono Nerd Font Mono"
+        },
         "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
         "hidden": false,
         "name": "Ubuntu",
+        "opacity": 80,
         "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc"
       }
     ]
