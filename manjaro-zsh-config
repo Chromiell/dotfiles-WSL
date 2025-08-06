@@ -138,12 +138,25 @@ ZSH_THEME_TERM_TITLE_IDLE="%n@%m:%~"
 
 # Runs before showing the prompt
 function mzc_termsupport_precmd {
+  local now=$SECONDS
+  _EXECUTION_TIME_=$(( now - _CMD_START_TIME ))
+
+  print -Pnr -- "$TERM_TITLE"
+
+  if [ "$NEWLINE_BEFORE_PROMPT" = yes ]; then
+      if [ -z "$_NEW_LINE_BEFORE_PROMPT" ]; then
+          _NEW_LINE_BEFORE_PROMPT=1
+      else
+          print ""
+      fi
+  fi
   [[ "${DISABLE_AUTO_TITLE:-}" == true ]] && return
   title $ZSH_THEME_TERM_TAB_TITLE_IDLE $ZSH_THEME_TERM_TITLE_IDLE
 }
 
 # Runs before executing the command
 function mzc_termsupport_preexec {
+  _CMD_START_TIME=$SECONDS
   [[ "${DISABLE_AUTO_TITLE:-}" == true ]] && return
 
   emulate -L zsh
