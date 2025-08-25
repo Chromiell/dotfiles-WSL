@@ -30,7 +30,7 @@ bindkey '^[[5~' beginning-of-buffer-or-history    # page up
 bindkey '^[[6~' end-of-buffer-or-history          # page down
 bindkey '^[[H' beginning-of-line                  # home
 bindkey '^[[F' end-of-line                        # end
-bindkey '^Z' undo                               # ctrl + z undo last action
+bindkey '^Z' undo                                 # ctrl + z undo last action
 
 # enable completion features
 autoload -Uz compinit
@@ -113,7 +113,7 @@ configure_prompt() {
         twoline)
             PROMPT=$'%F{%(#.blue.cyan)}┌──${debian_chroot:+($debian_chroot)─}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))─}(%B%F{%(#.red.blue)}%n'$prompt_symbol$'%m%b%F{%(#.blue.cyan)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.yellow.yellow)}$(git_prompt)%F{%(#.blue.cyan)}]\n└─%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
             # Right-side prompt with exit codes and background processes
-            RPROMPT=$'%(?.%F{green}✔.%F{red}✗)%F{reset} %F{%(#.yellow.yellow)}${_EXECUTION_TIME_}s%f%b'
+            RPROMPT=$'%(?.%F{green}✔.%F{red}✗%(?..%F{red} $?)%F{reset}) %F{%(#.yellow.yellow)}${_EXECUTION_TIME_}s%f%b'
             ;;
         oneline)
             PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.red.blue)}%n@%m%b%F{reset}:%B%{$fg[yellow]%}$(git_prompt)%F{%(#.blue.cyan)}%~%b%F{reset}%(#.#.$) '
