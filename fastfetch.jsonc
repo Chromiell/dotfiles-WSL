@@ -20,22 +20,22 @@
         },
         {
             "key": " ",
-            "keycolor": "blue",
+            "keyColor": "blue",
             "type": "os"
         },
         {
             "key": " ",
-            "keycolor": "blue",
+            "keyColor": "blue",
             "type": "kernel"
         },
         {
             "key": " ",
-            "keycolor": "blue",
+            "keyColor": "blue",
             "type": "de"
         },
         {
             "key": " 󰏖",
-            "keycolor": "blue",
+            "keyColor": "blue",
             "type": "packages"
         },
         {
@@ -44,37 +44,37 @@
         },
         {
             "key": " 󰻠",
-            "keycolor": "yellow",
+            "keyColor": "yellow",
             "type": "cpu"
         },
         {
             "key": " 󰍛",
-            "keycolor": "yellow",
+            "keyColor": "yellow",
             "type": "gpu"
         },
         {
             "key": " 󰑭",
-            "keycolor": "yellow",
+            "keyColor": "yellow",
             "type": "memory"
         },
         {
             "key": " ",
-            "keycolor": "yellow",
+            "keyColor": "yellow",
             "type": "disk"
         },
         {
             "key": " 󰍹",
-            "keycolor": "yellow",
+            "keyColor": "yellow",
             "type": "display"
         },
         {
             "key": " ",
-            "keycolor": "yellow",
+            "keyColor": "yellow",
             "type": "wm"
         },
         {
             "key": " ",
-            "keycolor": "yellow",
+            "keyColor": "yellow",
             "type": "battery"
         },
         {
@@ -83,22 +83,22 @@
         },
         {
             "key": " 󰅐",
-            "keycolor": "cyan",
+            "keyColor": "cyan",
             "type": "uptime"
         },
         {
             "key": " ",
-            "keycolor": "cyan",
+            "keyColor": "cyan",
             "type": "terminal"
         },
         {
             "key": " ",
-            "keycolor": "cyan",
+            "keyColor": "cyan",
             "type": "shell"
         },
         {
             "key": " 󰝚",
-            "keycolor": "cyan",
+            "keyColor": "cyan",
             "type": "media"
         },
         {
