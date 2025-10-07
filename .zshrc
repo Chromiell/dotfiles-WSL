@@ -246,6 +246,7 @@ fi
 alias la='ls -A'
 alias l='ls -CF'
 alias ll="ls -alhF --group-directories-first"
+alias fastfetch="fastfetch -c ~/fastfetch.jsonc"
 
 # enable auto-suggestions based on the history
 if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
@@ -264,4 +265,4 @@ if [[ -e ~/manjaro-zsh-config ]]; then
   source ~/manjaro-zsh-config
 fi
 
-fastfetch -c ~/fastfetch.jsonc
+fastfetch
