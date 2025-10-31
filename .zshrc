@@ -241,13 +241,6 @@ if [ -x /usr/bin/dircolors ]; then
     zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 fi
 
-# some more ls aliases
-#alias ll='ls -l'
-alias la='ls -A'
-alias l='ls -CF'
-alias ll="grc ls -alhF --group-directories-first --color=always"
-alias fastfetch="fastfetch -c ~/fastfetch.jsonc"
-
 # enable auto-suggestions based on the history
 if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
     . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -264,5 +257,12 @@ fi
 if [[ -e ~/manjaro-zsh-config ]]; then
   source ~/manjaro-zsh-config
 fi
+
+# some more ls aliases
+#alias ll='ls -l'
+alias la='ls -A'
+alias l='ls -CF'
+alias ll="grc ls -alhF --group-directories-first --color=always"
+alias fastfetch="fastfetch -c ~/fastfetch.jsonc"
 
 fastfetch

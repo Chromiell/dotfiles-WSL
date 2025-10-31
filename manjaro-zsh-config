@@ -210,7 +210,7 @@ add-zsh-hook precmd mzc_termsupport_precmd
 add-zsh-hook preexec mzc_termsupport_preexec
 
 # File and Dir colors for ls and other outputs
-export LS_OPTIONS='--color=auto'
+export LS_OPTIONS='--color=always'
 eval "$(dircolors -b)"
 alias ls='ls $LS_OPTIONS'
 
