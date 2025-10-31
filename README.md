@@ -1,10 +1,10 @@
 # Zsh config for WSL
 
 ![Example screenshot](example.png)
-Run the following command (Debian/Ubuntu) to install Zsh:
+Run the following command (Debian/Ubuntu) to install Zsh and other dependencies:
 
 ```bash
-sudo apt install zsh zsh-autosuggestions zsh-syntax-highlighting
+sudo apt install zsh zsh-autosuggestions zsh-syntax-highlighting grc
 ```
 
 and git clone this repo in your `$HOME` directory.

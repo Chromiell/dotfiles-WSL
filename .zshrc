@@ -245,7 +245,7 @@ fi
 #alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
-alias ll="ls -alhF --group-directories-first"
+alias ll="grc ls -alhF --group-directories-first --color=always"
 alias fastfetch="fastfetch -c ~/fastfetch.jsonc"
 
 # enable auto-suggestions based on the history
