@@ -50,9 +50,9 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 # History configurations
-HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=2000
+HISTFILE=~/.zhistory
+HISTSIZE=10000
+SAVEHIST=10000
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
 setopt hist_ignore_dups       # ignore duplicated commands history list
 setopt hist_ignore_space      # ignore commands that start with space
@@ -275,9 +275,6 @@ zstyle ':completion:*' rehash true                              # automatically 
 zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
-HISTFILE=~/.zhistory
-HISTSIZE=10000
-SAVEHIST=10000
 #export EDITOR=/usr/bin/nano
 #export VISUAL=/usr/bin/nano
 WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider certain characters part of the word
@@ -477,5 +474,7 @@ alias la='ls -A'
 alias l='ls -CF'
 alias ll="grc ls -alhF --group-directories-first --color=always"
 alias fastfetch="fastfetch -c ~/fastfetch.jsonc"
+
+export GEMINI_MODEL="gemini-2.5-pro"
 
 fastfetch
