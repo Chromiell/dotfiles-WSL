@@ -9,6 +9,14 @@ sudo apt install zsh zsh-autosuggestions zsh-syntax-highlighting grc
 
 and git clone this repo in your `$HOME` directory.
 
+```bash
+cd ~
+git init .
+git remote add "origin" https://github.com/Chromiell/dotfiles-WSL.git
+git fetch
+git reset --hard origin/main
+```
+
 ## Change default shell to Zsh
 
 Run the following command to list all available shells:
