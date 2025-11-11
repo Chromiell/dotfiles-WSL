@@ -472,7 +472,7 @@ alias ls='ls $LS_OPTIONS'
 #alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
-alias ll="grc ls -alhF --group-directories-first --color=always"
+alias ll="eza -alhg --group-directories-first --icons=auto"
 alias fastfetch="fastfetch -c ~/fastfetch.jsonc"
 
 export GEMINI_MODEL="gemini-2.5-pro"
