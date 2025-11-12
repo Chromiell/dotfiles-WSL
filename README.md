@@ -4,7 +4,7 @@
 Run the following command (Debian/Ubuntu) to install Zsh and other dependencies:
 
 ```bash
-sudo apt install zsh zsh-autosuggestions zsh-syntax-highlighting eza fzf
+sudo apt install zsh zsh-autosuggestions zsh-syntax-highlighting eza fzf fd-find ripgrep
 ```
 
 and git clone this repo in your `$HOME` directory.

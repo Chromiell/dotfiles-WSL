@@ -466,7 +466,18 @@ add-zsh-hook preexec mzc_termsupport_preexec
 export LS_OPTIONS='--color=always'
 eval "$(dircolors -b)"
 alias ls='ls $LS_OPTIONS'
+alias fd='fdfind'
 #Fine importazione manjaro-zsh-configuration
+
+# Set up fzf key bindings and fuzzy completion
+source /usr/share/doc/fzf/examples/key-bindings.zsh
+source /usr/share/doc/fzf/examples/completion.zsh
+
+export GEMINI_MODEL="gemini-2.5-pro"
+export FZF_DEFAULT_COMMAND="rg --files --hidden --no-ignore-vcs -g '!.git'"
+export FZF_CTRL_T_COMMAND="rg --files --hidden --no-ignore-vcs -g '!.git'"
+export FZF_ALT_C_COMMAND="fdfind --type d --hidden --exclude .git"
+
 
 # some more ls aliases
 #alias ll='ls -l'
@@ -474,11 +485,6 @@ alias la='ls -A'
 alias l='ls -CF'
 alias ll="eza -alhg --group-directories-first --icons=auto"
 alias fastfetch="fastfetch -c ~/fastfetch.jsonc"
-
-export GEMINI_MODEL="gemini-2.5-pro"
-
-# Set up fzf key bindings and fuzzy completion
-source /usr/share/doc/fzf/examples/key-bindings.zsh
-source /usr/share/doc/fzf/examples/completion.zsh
+alias ff="fzf --preview '~/fzf-preview.sh {}' --bind 'focus:transform-header:file --brief {}'"
 
 fastfetch
