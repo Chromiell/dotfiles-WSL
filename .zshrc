@@ -477,4 +477,8 @@ alias fastfetch="fastfetch -c ~/fastfetch.jsonc"
 
 export GEMINI_MODEL="gemini-2.5-pro"
 
+# Set up fzf key bindings and fuzzy completion
+source /usr/share/doc/fzf/examples/key-bindings.zsh
+source /usr/share/doc/fzf/examples/completion.zsh
+
 fastfetch
