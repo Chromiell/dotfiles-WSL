@@ -486,5 +486,6 @@ alias l='ls -CF'
 alias ll="eza -alhg --group-directories-first --icons=auto"
 alias fastfetch="fastfetch -c ~/fastfetch.jsonc"
 alias ff="fzf --preview '~/fzf-preview.sh {}' --bind 'focus:transform-header:file --brief {}'"
+alias bat="batcat --paging=never"
 
 fastfetch
