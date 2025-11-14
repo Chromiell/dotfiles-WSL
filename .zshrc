@@ -484,6 +484,7 @@ export FZF_ALT_C_COMMAND="fdfind --type d --hidden --exclude .git"
 alias la='ls -A'
 alias l='ls -CF'
 alias ll="eza -alhg --group-directories-first --icons=auto"
+alias lll="eza -alhg --group-directories-first --total-size --icons=auto"
 alias fastfetch="fastfetch -c ~/fastfetch.jsonc"
 alias ff="fzf --preview '~/fzf-preview.sh {}' --bind 'focus:transform-header:file --brief {}'"
 alias bat="batcat --paging=never"
