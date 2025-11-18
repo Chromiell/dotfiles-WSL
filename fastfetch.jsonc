@@ -58,6 +58,11 @@
             "type": "memory"
         },
         {
+            "key": " 󰓡",
+            "keyColor": "yellow",
+            "type": "swap"
+        },
+        {
             "key": " ",
             "keyColor": "yellow",
             "type": "disk"
@@ -100,6 +105,11 @@
             "key": " 󰝚",
             "keyColor": "cyan",
             "type": "media"
+        },
+        {
+            "key": " 󰩟",
+            "keyColor": "cyan",
+            "type": "localip",
         },
         {
             "format": "\u001b[93m└────────────────────────────────────────────────────────────┘",
