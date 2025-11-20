@@ -473,7 +473,7 @@ alias fd='fdfind'
 source /usr/share/doc/fzf/examples/key-bindings.zsh
 source /usr/share/doc/fzf/examples/completion.zsh
 
-export GEMINI_MODEL="gemini-2.5-pro"
+export GEMINI_MODEL="gemini—3—pro—preview"
 export FZF_DEFAULT_COMMAND="rg --files --hidden --no-ignore-vcs -g '!.git'"
 export FZF_CTRL_T_COMMAND="rg --files --hidden --no-ignore-vcs -g '!.git'"
 export FZF_ALT_C_COMMAND="fdfind --type d --hidden --exclude .git"
