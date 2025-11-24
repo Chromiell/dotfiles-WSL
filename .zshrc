@@ -270,7 +270,7 @@ setopt histignorespace                                          # Don't save com
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'       # Case insensitive tab completion
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"         # Colored completion (different colors for dirs/files/etc)
-zstyle ':completion:*' rehash true                              # automatically find new executables in path 
+zstyle ':completion:*' rehash true                              # automatically find new executables in path
 # Speed up completions
 zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*' use-cache on
@@ -307,13 +307,13 @@ bindkey '^[[1;5C' forward-word                                  #
 bindkey '^H' backward-kill-word                                 # delete previous word with ctrl+backspace
 bindkey '^[[Z' undo                                             # Shift+tab undo last action
 
-## Alias section 
+## Alias section
 alias cp="cp -i"                                                # Confirm before overwriting something
 alias df='df -h'                                                # Human-readable sizes
 alias free='free -m'                                            # Show sizes in MB
 alias gitu='git add . && git commit && git push'
 
-# Theming section  
+# Theming section
 autoload -U compinit colors zcalc
 compinit -d
 colors
@@ -340,7 +340,7 @@ source ~/.oh-my-zsh/custom/plugins/zsh-history-substring-search/zsh-history-subs
 zmodload zsh/terminfo
 bindkey "$terminfo[kcuu1]" history-substring-search-up
 bindkey "$terminfo[kcud1]" history-substring-search-down
-bindkey '^[[A' history-substring-search-up			
+bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
 # Offer to install missing package if command is not found
@@ -470,14 +470,14 @@ alias fd='fdfind'
 #Fine importazione manjaro-zsh-configuration
 
 # Set up fzf key bindings and fuzzy completion
-source /usr/share/doc/fzf/examples/key-bindings.zsh
-source /usr/share/doc/fzf/examples/completion.zsh
+source /home/linuxbrew/.linuxbrew/opt/fzf/shell/key-bindings.zsh
+source /home/linuxbrew/.linuxbrew/opt/fzf/shell/completion.zsh
 
 export GEMINI_MODEL="gemini—3—pro—preview"
-export FZF_DEFAULT_COMMAND="rg --files --hidden --no-ignore-vcs -g '!.git'"
-export FZF_CTRL_T_COMMAND="rg --files --hidden --no-ignore-vcs -g '!.git'"
-export FZF_ALT_C_COMMAND="fdfind --type d --hidden --exclude .git"
-
+export FZF_DEFAULT_COMMAND="rg --files --hidden --no-ignore-vcs --follow -g '!.git'"
+export FZF_CTRL_T_COMMAND="rg --files --hidden --no-ignore-vcs --follow -g '!.git'"
+export FZF_ALT_C_COMMAND="fdfind --type d --hidden --exclude .git --follow"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # some more ls aliases
 #alias ll='ls -l'
@@ -486,7 +486,7 @@ alias l='ls -CF'
 alias ll="eza -alhg --group-directories-first --icons=auto"
 alias lll="eza -alhg --group-directories-first --total-size --icons=auto"
 alias fastfetch="fastfetch -c ~/fastfetch.jsonc"
-alias ff="fzf --preview '~/fzf-preview.sh {}' --bind 'focus:transform-header:file --brief {}'"
+alias ff="fzf --style full --border --padding 1,2 --border-label ' FuzzyFind ' --input-label ' Input ' --header-label ' File Type ' --preview '~/fzf-preview.sh {}' --bind 'result:transform-list-label: if [[ -z $FZF_QUERY ]]; then echo \" $FZF_MATCH_COUNT items \" else echo \" $FZF_MATCH_COUNT matches for [$FZF_QUERY] \" fi' --bind 'focus:transform-preview-label:[[ -n {} ]] && printf \" Previewing [%s] \" {}' --bind 'focus:+transform-header:file --brief {} || echo \"No file selected\"' --bind 'ctrl-r:change-list-label( Reloading the list )+reload(sleep 2; git ls-files)' --color 'border:#aaaaaa,label:#cccccc' --color 'preview-border:#9999cc,preview-label:#ccccff' --color 'list-border:#669966,list-label:#99cc99' --color 'input-border:#996666,input-label:#ffcccc' --color 'header-border:#6699cc,header-label:#99ccff'"
 alias bat="batcat --paging=never"
 
 fastfetch
