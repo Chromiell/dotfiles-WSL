@@ -474,9 +474,7 @@ source /home/linuxbrew/.linuxbrew/opt/fzf/shell/key-bindings.zsh
 source /home/linuxbrew/.linuxbrew/opt/fzf/shell/completion.zsh
 
 export GEMINI_MODEL="gemini—3—pro—preview"
-export FZF_DEFAULT_COMMAND="rg --files --hidden --no-ignore-vcs --follow -g '!.git'"
-export FZF_CTRL_T_COMMAND="rg --files --hidden --no-ignore-vcs --follow -g '!.git'"
-export FZF_ALT_C_COMMAND="fdfind --type d --hidden --exclude .git --follow"
+source <(/home/linuxbrew/.linuxbrew/bin/fzf --zsh)
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # some more ls aliases
