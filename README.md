@@ -4,8 +4,12 @@
 Run the following command (Debian/Ubuntu) to install Zsh and other dependencies:
 
 ```bash
-sudo apt install zsh zsh-autosuggestions zsh-syntax-highlighting eza fzf fd-find ripgrep bat
+sudo apt install zsh zsh-autosuggestions zsh-syntax-highlighting eza fd-find ripgrep bat
 ```
+
+Yous should also install the `fzf` package.
+
+> **_NOTE:_** the `fzf` package on Ubuntu uses an old version, it's better to install the latest version from Brew.
 
 and git clone this repo in your `$HOME` directory.
 
