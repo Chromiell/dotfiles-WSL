@@ -473,9 +473,10 @@ alias fd='fdfind'
 source /home/linuxbrew/.linuxbrew/opt/fzf/shell/key-bindings.zsh
 source /home/linuxbrew/.linuxbrew/opt/fzf/shell/completion.zsh
 
+export HOMEBREW_EDITOR="micro"
 export GEMINI_MODEL="gemini—3—pro—preview"
-source <(/home/linuxbrew/.linuxbrew/bin/fzf --zsh)
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+source <(fzf --zsh)
 
 # some more ls aliases
 #alias ll='ls -l'
