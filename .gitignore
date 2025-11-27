@@ -7,3 +7,6 @@
 !README.md
 !.gitignore
 !example.png
+!.config/
+!.config/eza/
+!.config/eza/theme.yml
