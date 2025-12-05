@@ -10,3 +10,4 @@
 !.config/
 !.config/eza/
 !.config/eza/theme.yml
+!fzf-preview.sh
