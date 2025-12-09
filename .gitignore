@@ -10,4 +10,6 @@
 !.config/
 !.config/eza/
 !.config/eza/theme.yml
+!.config/php-cs-fixer/
+!.config/php-cs-fixer/**
 !fzf-preview.sh
