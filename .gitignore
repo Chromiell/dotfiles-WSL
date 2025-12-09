@@ -8,6 +8,10 @@
 !.gitignore
 !example.png
 !.config/
+!.config/fzf/
+!.config/fzf/**
+!.config/fastfetch/
+!.config/fastfetch/**
 !.config/eza/
 !.config/eza/theme.yml
 !.config/php-cs-fixer/
