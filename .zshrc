@@ -111,11 +111,11 @@ configure_prompt() {
     [ "$EUID" -eq 0 ] && prompt_symbol=💀
     case "$PROMPT_ALTERNATIVE" in
         twoline)
-            PROMPT=$'%F{%(#.blue.cyan)}┌──${debian_chroot:+($debian_chroot)─}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))─}(%B%F{%(#.red.blue)}%n'$prompt_symbol$'%m%b%F{%(#.blue.cyan)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%B%F{%(#.yellow.yellow)}$(git_prompt)%F{%(#.blue.cyan)}]\n└─%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
+            PROMPT=$'%F{%(#.blue.cyan)}┌──${debian_chroot:+($debian_chroot)─}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))─}(%B%F{%(#.red.blue)}%n'$prompt_symbol$'%m%b%F{%(#.blue.cyan)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%B%F{%(#.yellow.yellow)}$(git_prompt)%b%F{%(#.blue.cyan)}]\n└─%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
             RPROMPT=$'%(?.%F{green}✔.%F{red}✗%(?..%F{red} [$?])%F{reset}) %F{%(#.yellow.yellow)}${_EXECUTION_TIME_}s%f%b'
             ;;
         oneline)
-            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.red.blue)}%n@%m%b%F{reset}%F{%(#.blue.cyan)}:[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%B%{$fg[yellow]%}$(git_prompt)%F{%(#.blue.cyan)}]%F{reset} %(#.#.$) '
+            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.red.blue)}%n@%m%b%F{reset}%F{%(#.blue.cyan)}:[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%B%{$fg[yellow]%}$(git_prompt)%b%F{%(#.blue.cyan)}]%F{reset} %(#.#.$) '
             # Right-side prompt with exit codes and background processes
             RPROMPT=$'%(?.%F{green}✔.%F{red}✗%(?..%F{red} [$?])%F{reset}) %F{%(#.yellow.yellow)}${_EXECUTION_TIME_}s%f%b'
             ;;
