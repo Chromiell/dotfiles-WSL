@@ -480,8 +480,8 @@ source <(fzf --zsh)
 
 # some more ls aliases
 #alias ll='ls -l'
-alias la='ls -A'
-alias l='ls -CF'
+alias l='eza --group-directories-first --icons=auto'
+alias la='eza -a --group-directories-first --icons=auto'
 alias ll="eza -alhg --group-directories-first --icons=auto"
 alias lll="eza -alhg --group-directories-first --total-size --icons=auto"
 alias fastfetch="fastfetch -c ~/.config/fastfetch/fastfetch.jsonc"
