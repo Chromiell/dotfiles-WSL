@@ -9,6 +9,7 @@ setopt nonomatch           # hide error message if there is no match for the pat
 setopt notify              # report the status of background jobs immediately
 setopt numericglobsort     # sort filenames numerically when it makes sense
 setopt promptsubst         # enable command substitution in prompt
+setopt globdots            # lets files beginning with a . be matched without explicitly specifying the dot
 
 # Declare global variable
 typeset -g _EXECUTION_TIME_ _CMD_START_TIME
