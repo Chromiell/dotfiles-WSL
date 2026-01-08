@@ -1,5 +1,6 @@
 *
 !.zshrc
+!.zprofile
 !.oh-my-zsh/**
 !.oh-my-zsh/
 !README.md
