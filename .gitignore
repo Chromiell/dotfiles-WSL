@@ -12,6 +12,8 @@
 !.config/fastfetch/
 !.config/fastfetch/**
 !.config/eza/
-!.config/eza/theme.yml
+!.config/eza/**
+!.config/composer/
+!.config/composer/*
 !.config/php-cs-fixer/
 !.config/php-cs-fixer/**
