@@ -475,7 +475,7 @@ source /home/linuxbrew/.linuxbrew/opt/fzf/shell/key-bindings.zsh
 source /home/linuxbrew/.linuxbrew/opt/fzf/shell/completion.zsh
 
 export HOMEBREW_EDITOR="micro"
-export GEMINI_MODEL="gemini-2.5-pro"
+export GEMINI_MODEL="gemini-3-pro"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 source <(fzf --zsh)
 
