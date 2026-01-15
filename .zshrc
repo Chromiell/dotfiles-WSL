@@ -113,17 +113,17 @@ configure_prompt() {
     case "$PROMPT_ALTERNATIVE" in
         twoline)
             PROMPT=$'%F{%(#.blue.cyan)}┌──${debian_chroot:+($debian_chroot)─}%F{%(#.blue.cyan)}${VIRTUAL_ENV:+(}%F{%(#.blue.magenta)}${VIRTUAL_ENV:+$(basename $VIRTUAL_ENV)}%F{%(#.blue.cyan)}${VIRTUAL_ENV:+)─}(%B%F{%(#.red.blue)}%n'$prompt_symbol$'%m%b%F{%(#.blue.cyan)})─[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%B%F{%(#.yellow.yellow)}$(git_prompt)%b%F{%(#.blue.cyan)}]\n└─%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
-            RPROMPT=$'%(?.%F{green}✔.%F{red}✗%(?..%F{red} [$?])%F{reset}) %F{%(#.yellow.yellow)}${_EXECUTION_TIME_}s%f%b'
+            RPROMPT=$'%(?.%F{green}✔.%F{red}✗%(?..%F{red} [$?])%F{reset}) %F{%(#.yellow.yellow)}${_EXECUTION_TIME_}%f%b'
             ;;
         oneline)
             PROMPT=$'${debian_chroot:+($debian_chroot)}%F{%(#.blue.cyan)}${VIRTUAL_ENV:+(}%F{%(#.blue.magenta)}${VIRTUAL_ENV:+$(basename $VIRTUAL_ENV)}%F{%(#.blue.cyan)}${VIRTUAL_ENV:+):}%B%F{%(#.red.blue)}%n'$prompt_symbol$'%m%b%F{reset}%F{%(#.blue.cyan)}:[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%B%{$fg[yellow]%}$(git_prompt)%b%F{%(#.blue.cyan)}]%F{reset} %(#.#.$) '
             # Right-side prompt with exit codes and background processes
-            RPROMPT=$'%(?.%F{green}✔.%F{red}✗%(?..%F{red} [$?])%F{reset}) %F{%(#.yellow.yellow)}${_EXECUTION_TIME_}s%f%b'
+            RPROMPT=$'%(?.%F{green}✔.%F{red}✗%(?..%F{red} [$?])%F{reset}) %F{%(#.yellow.yellow)}${_EXECUTION_TIME_}%f%b'
             ;;
         backtrack)
             PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{red}%n@%m%b%F{reset}:%B%{$fg[yellow]%}$(git_prompt)%F{blue}%~%b%F{reset}%(#.#.$) '
             # Right-side prompt with exit codes and background processes
-            RPROMPT=$'%(?.%F{green}✔.%F{red}✗%(?..%F{red} [$?])%F{reset}) %F{%(#.yellow.yellow)}${_EXECUTION_TIME_}s%f%b'
+            RPROMPT=$'%(?.%F{green}✔.%F{red}✗%(?..%F{red} [$?])%F{reset}) %F{%(#.yellow.yellow)}${_EXECUTION_TIME_}%f%b'
             ;;
     esac
     unset prompt_symbol
@@ -393,7 +393,24 @@ ZSH_THEME_TERM_TITLE_IDLE="%n@%m:%~"
 # Runs before showing the prompt
 function mzc_termsupport_precmd {
   local now=$SECONDS
-  _EXECUTION_TIME_=$(( now - _CMD_START_TIME ))
+  local elapsed=$(( now - _CMD_START_TIME ))
+  if (( elapsed < 0 )); then
+    elapsed=0
+  fi
+
+  if (( elapsed > 3600 )); then
+    local hrs=$(( elapsed / 3600 ))
+    local rem=$(( elapsed % 3600 ))
+    local mins=$(( rem / 60 ))
+    local secs=$(( rem % 60 ))
+    _EXECUTION_TIME_="${hrs}h$(printf '%02d' $mins)m$(printf '%02d' $secs)s"
+  elif (( elapsed > 60 )); then
+    local mins=$(( elapsed / 60 ))
+    local secs=$(( elapsed % 60 ))
+    _EXECUTION_TIME_="${mins}m$(printf '%02d' $secs)s"
+  else
+    _EXECUTION_TIME_="${elapsed}s"
+  fi
 
   print -Pnr -- "$TERM_TITLE"
 
