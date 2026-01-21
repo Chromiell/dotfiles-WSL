@@ -1,6 +1,8 @@
 alias fastfetch="fastfetch -c ~/.config/fastfetch/fastfetch.jsonc"
 
-fastfetch
+if [[ -f /usr/bin/fastfetch ]]; then
+    fastfetch
+fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -497,6 +499,24 @@ eval "$(dircolors -b)"
 alias ls='ls $LS_OPTIONS'
 alias fd='fdfind'
 #Fine importazione manjaro-zsh-configuration
+
+#Custom functions
+# Searches for text in all files in the current folder
+ftext() {
+    # -i case-insensitive
+    # -I ignore binary files
+    # -H causes filename to be printed
+    # -r recursive search
+    # -n causes line number to be printed
+    # optional: -F treat search term as a literal, not a regular expression
+    # optional: -l only print filenames and not the matching lines ex. grep -irl "$1" *
+    grep -iIHrn --color=always "$1" . | less -r
+}
+
+# Copy file with a progress bar
+cpp() {
+    rsync -avh --progress "$1" "$2"
+}
 
 # Set up fzf key bindings and fuzzy completion
 source /home/linuxbrew/.linuxbrew/opt/fzf/shell/key-bindings.zsh

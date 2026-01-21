@@ -4,7 +4,7 @@
 Run the following command (Debian/Ubuntu) to install Zsh and other dependencies:
 
 ```bash
-sudo apt install zsh zsh-autosuggestions zsh-syntax-highlighting fd-find ripgrep bat
+sudo apt install zsh zsh-autosuggestions zsh-syntax-highlighting fd-find ripgrep bat rsync pv
 ```
 
 You should also install the `fzf` and `eza` packages.
