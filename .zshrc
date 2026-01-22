@@ -82,78 +82,14 @@ TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
 # make less more friendly for non-text input files, see lesspipe(1)
 #[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
 
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-        # We have color support; assume it's compliant with Ecma-48
-        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-        # a case would tend to support setf rather than setaf.)
-        color_prompt=yes
-    else
-        color_prompt=
-    fi
-fi
-
-git_prompt() {
-    local branch="$(git symbolic-ref HEAD 2> /dev/null | cut -d '/' -f 3)"
-    local branch_truncated="${branch:0:30}"
-
-    if (( ${#branch} > ${#branch_truncated} )); then
-        branch="${branch_truncated}..."
-    fi
-
-    [ -n "$branch" ] && echo " ( ${branch})"
-}
-
-configure_prompt() {
-    prompt_symbol=🔒
-    # Skull emoji for root terminal
-    [ "$EUID" -eq 0 ] && prompt_symbol=💀
-    case "$PROMPT_ALTERNATIVE" in
-        twoline)
-            PROMPT=$'%F{%(#.blue.cyan)}┌──${debian_chroot:+($debian_chroot)─}%F{%(#.blue.cyan)}${VIRTUAL_ENV:+(}%F{%(#.blue.magenta)}${VIRTUAL_ENV:+$(basename $VIRTUAL_ENV)}%F{%(#.blue.cyan)}${VIRTUAL_ENV:+)─}(%B%F{%(#.red.blue)}%n'$prompt_symbol$'%m%b%F{%(#.blue.cyan)})─[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%B%F{%(#.yellow.yellow)}$(git_prompt)%b%F{%(#.blue.cyan)}]\n└─%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
-            RPROMPT=$'%(?.%F{green}✔.%F{red}✗%(?..%F{red} [$?])%F{reset}) %F{%(#.yellow.yellow)}${_EXECUTION_TIME_}%f%b'
-            ;;
-        oneline)
-            PROMPT=$'${debian_chroot:+($debian_chroot)}%F{%(#.blue.cyan)}${VIRTUAL_ENV:+(}%F{%(#.blue.magenta)}${VIRTUAL_ENV:+$(basename $VIRTUAL_ENV)}%F{%(#.blue.cyan)}${VIRTUAL_ENV:+):}%B%F{%(#.red.blue)}%n'$prompt_symbol$'%m%b%F{reset}%F{%(#.blue.cyan)}:[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%B%{$fg[yellow]%}$(git_prompt)%b%F{%(#.blue.cyan)}]%F{reset} %(#.#.$) '
-            # Right-side prompt with exit codes and background processes
-            RPROMPT=$'%(?.%F{green}✔.%F{red}✗%(?..%F{red} [$?])%F{reset}) %F{%(#.yellow.yellow)}${_EXECUTION_TIME_}%f%b'
-            ;;
-        backtrack)
-            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{red}%n@%m%b%F{reset}:%B%{$fg[yellow]%}$(git_prompt)%F{blue}%~%b%F{reset}%(#.#.$) '
-            # Right-side prompt with exit codes and background processes
-            RPROMPT=$'%(?.%F{green}✔.%F{red}✗%(?..%F{red} [$?])%F{reset}) %F{%(#.yellow.yellow)}${_EXECUTION_TIME_}%f%b'
-            ;;
-    esac
-    unset prompt_symbol
-}
-
-# The following block is surrounded by two delimiters.
-# These delimiters must not be modified. Thanks.
-# START KALI CONFIG VARIABLES
-PROMPT_ALTERNATIVE=twoline
-NEWLINE_BEFORE_PROMPT=yes
-# STOP KALI CONFIG VARIABLES
-
 if [ "$color_prompt" = yes ]; then
     # override default virtualenv indicator in prompt
     VIRTUAL_ENV_DISABLE_PROMPT=1
-
-    configure_prompt
 
     # enable syntax-highlighting
     if [ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && [ "$color_prompt" = yes ]; then
@@ -204,28 +140,6 @@ if [ "$color_prompt" = yes ]; then
 else
     PROMPT='${debian_chroot:+($debian_chroot)}%n@%m:%~%# '
 fi
-unset color_prompt force_color_prompt
-
-toggle_oneline_prompt(){
-    if [ "$PROMPT_ALTERNATIVE" = oneline ]; then
-        PROMPT_ALTERNATIVE=twoline
-    else
-        PROMPT_ALTERNATIVE=oneline
-    fi
-    configure_prompt
-    zle reset-prompt
-}
-zle -N toggle_oneline_prompt
-bindkey ^P toggle_oneline_prompt
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
-    TERM_TITLE=$'\e]0;${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%n@%m: %~\a'
-    ;;
-*)
-    ;;
-esac
 
 # enable color support of ls, less and man, and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -403,95 +317,7 @@ function title {
 ZSH_THEME_TERM_TAB_TITLE_IDLE="%15<..<%~%<<" #15 char left truncated PWD
 ZSH_THEME_TERM_TITLE_IDLE="%n@%m:%~"
 
-# Runs before showing the prompt
-function mzc_termsupport_precmd {
-  local now=$SECONDS
-  local elapsed=$(( now - _CMD_START_TIME ))
-  if (( elapsed < 0 )); then
-    elapsed=0
-  fi
-
-  if (( elapsed > 3600 )); then
-    local hrs=$(( elapsed / 3600 ))
-    local rem=$(( elapsed % 3600 ))
-    local mins=$(( rem / 60 ))
-    local secs=$(( rem % 60 ))
-    _EXECUTION_TIME_="${hrs}h$(printf '%02d' $mins)m$(printf '%02d' $secs)s"
-  elif (( elapsed > 60 )); then
-    local mins=$(( elapsed / 60 ))
-    local secs=$(( elapsed % 60 ))
-    _EXECUTION_TIME_="${mins}m$(printf '%02d' $secs)s"
-  else
-    _EXECUTION_TIME_="${elapsed}s"
-  fi
-
-  print -Pnr -- "$TERM_TITLE"
-
-  if [ "$NEWLINE_BEFORE_PROMPT" = yes ]; then
-      if [ -z "$_NEW_LINE_BEFORE_PROMPT" ]; then
-          _NEW_LINE_BEFORE_PROMPT=1
-      else
-          print ""
-      fi
-  fi
-  [[ "${DISABLE_AUTO_TITLE:-}" == true ]] && return
-  title $ZSH_THEME_TERM_TAB_TITLE_IDLE $ZSH_THEME_TERM_TITLE_IDLE
-}
-
-# Runs before executing the command
-function mzc_termsupport_preexec {
-  _CMD_START_TIME=$SECONDS
-  [[ "${DISABLE_AUTO_TITLE:-}" == true ]] && return
-
-  emulate -L zsh
-
-  # split command into array of arguments
-  local -a cmdargs
-  cmdargs=("${(z)2}")
-  # if running fg, extract the command from the job description
-  if [[ "${cmdargs[1]}" = fg ]]; then
-    # get the job id from the first argument passed to the fg command
-    local job_id jobspec="${cmdargs[2]#%}"
-    # logic based on jobs arguments:
-    # http://zsh.sourceforge.net/Doc/Release/Jobs-_0026-Signals.html#Jobs
-    # https://www.zsh.org/mla/users/2007/msg00704.html
-    case "$jobspec" in
-      <->) # %number argument:
-        # use the same <number> passed as an argument
-        job_id=${jobspec} ;;
-      ""|%|+) # empty, %% or %+ argument:
-        # use the current job, which appears with a + in $jobstates:
-        # suspended:+:5071=suspended (tty output)
-        job_id=${(k)jobstates[(r)*:+:*]} ;;
-      -) # %- argument:
-        # use the previous job, which appears with a - in $jobstates:
-        # suspended:-:6493=suspended (signal)
-        job_id=${(k)jobstates[(r)*:-:*]} ;;
-      [?]*) # %?string argument:
-        # use $jobtexts to match for a job whose command *contains* <string>
-        job_id=${(k)jobtexts[(r)*${(Q)jobspec}*]} ;;
-      *) # %string argument:
-        # use $jobtexts to match for a job whose command *starts with* <string>
-        job_id=${(k)jobtexts[(r)${(Q)jobspec}*]} ;;
-    esac
-
-    # override preexec function arguments with job command
-    if [[ -n "${jobtexts[$job_id]}" ]]; then
-      1="${jobtexts[$job_id]}"
-      2="${jobtexts[$job_id]}"
-    fi
-  fi
-
-  # cmd name only, or if this is sudo or ssh, the next cmd
-  local CMD=${1[(wr)^(*=*|sudo|ssh|mosh|rake|-*)]:gs/%/%%}
-  local LINE="${2:gs/%/%%}"
-
-  title '$CMD' '%100>...>$LINE%<<'
-}
-
 autoload -U add-zsh-hook
-add-zsh-hook precmd mzc_termsupport_precmd
-add-zsh-hook preexec mzc_termsupport_preexec
 
 # File and Dir colors for ls and other outputs
 export LS_OPTIONS='--color=always'
@@ -561,6 +387,7 @@ alias lll="eza -alhg --group-directories-first --total-size --icons=auto"
 alias lllt="eza -alhgT --group-directories-first --total-size --icons=auto"
 alias ff="fzf --style full --border --padding 1,2 --border-label ' FuzzyFind ' --input-label ' Input ' --header-label ' File Type ' --preview '~/.config/fzf/fzf-preview.sh {}' --bind 'result:transform-list-label: if [[ -z $FZF_QUERY ]]; then echo \" $FZF_MATCH_COUNT items \" else echo \" $FZF_MATCH_COUNT matches for [$FZF_QUERY] \" fi' --bind 'focus:transform-preview-label:[[ -n {} ]] && printf \" Previewing [%s] \" {}' --bind 'focus:+transform-header:file --brief {} || echo \"No file selected\"' --bind 'ctrl-r:change-list-label( Reloading the list )+reload(sleep 2; git ls-files)' --color 'border:#aaaaaa,label:#cccccc' --color 'preview-border:#9999cc,preview-label:#ccccff' --color 'list-border:#669966,list-label:#99cc99' --color 'input-border:#996666,input-label:#ffcccc' --color 'header-border:#6699cc,header-label:#99ccff'"
 alias bat="batcat --paging=never"
+alias batt="batcat -pp"
 
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 
