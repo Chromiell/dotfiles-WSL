@@ -379,6 +379,7 @@ source <(fzf --zsh)
 
 # some more ls aliases
 #alias ll='ls -l'
+alias cp..='cp ..'
 alias l='eza --group-directories-first --icons=auto'
 alias la='eza -a --group-directories-first --icons=auto'
 alias ll="eza -alhg --group-directories-first --icons=auto"
