@@ -374,6 +374,7 @@ source /home/linuxbrew/.linuxbrew/opt/fzf/shell/completion.zsh
 
 export HOMEBREW_EDITOR="micro"
 export GEMINI_MODEL="gemini-3-pro"
+export EDITOR="micro"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 source <(fzf --zsh)
 
