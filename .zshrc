@@ -414,7 +414,7 @@ lld() {
 }
 
 # Long Listing of Directories with their subdirectories, with Types and icons
-lldt() {
+lltd() {
     if (( $# )); then
         eza -alhgTd --group-directories-first --icons=auto "$@"
     else
@@ -432,7 +432,7 @@ llld() {
 }
 
 # Long Listing of Directories with their subdirectories, with Types, total size and icons
-llldt() {
+llltd() {
     if (( $# )); then
         eza -alhgTd --group-directories-first --total-size --icons=auto "$@"
     else
