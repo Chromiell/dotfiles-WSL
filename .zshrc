@@ -389,7 +389,7 @@ cpp() {
 # List Directories Types and icons
 ld() {
     if (( $# )); then
-        eza --group-directories-first --icons=auto "$@"
+        eza -d --group-directories-first --icons=auto "$@"
     else
         eza -D --group-directories-first --icons=auto
     fi
@@ -398,7 +398,7 @@ ld() {
 # List All Directories Types and icons
 lad() {
     if (( $# )); then
-        eza -a --group-directories-first --icons=auto "$@"
+        eza -ad --group-directories-first --icons=auto "$@"
     else
         eza -aD --group-directories-first --icons=auto
     fi
