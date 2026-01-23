@@ -374,11 +374,22 @@ ftext() {
     # -i case-insensitive
     # -I ignore binary files
     # -H causes filename to be printed
+    # -n causes line number to be printed
+    # optional: -F treat search term as a literal, not a regular expression
+    # optional: -l only print filenames and not the matching lines ex. grep -irl "$1" *
+    find . -maxdepth 1 -type f -print0 | xargs -0 -r grep -iIHn --color=always -- "$1" | less
+}
+
+# Searches for text in all files in the current folder recursively
+frtext() {
+    # -i case-insensitive
+    # -I ignore binary files
+    # -H causes filename to be printed
     # -r recursive search
     # -n causes line number to be printed
     # optional: -F treat search term as a literal, not a regular expression
     # optional: -l only print filenames and not the matching lines ex. grep -irl "$1" *
-    grep -iIHrn --color=always "$1" . | less -r
+    grep -iIHrn --color=always "$1" . | less
 }
 
 # Copy file with a progress bar
