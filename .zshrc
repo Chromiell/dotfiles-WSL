@@ -87,13 +87,29 @@ case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
 
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+        # We have color support; assume it's compliant with Ecma-48
+        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+        # a case would tend to support setf rather than setaf.)
+        color_prompt=yes
+    else
+        color_prompt=
+    fi
+fi
+
 if [ "$color_prompt" = yes ]; then
     # override default virtualenv indicator in prompt
     VIRTUAL_ENV_DISABLE_PROMPT=1
 
     # enable syntax-highlighting
-    if [ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && [ "$color_prompt" = yes ]; then
-        . /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && [ "$color_prompt" = yes ]; then
+       . /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
         ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
         ZSH_HIGHLIGHT_STYLES[default]=none
         ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red,bold
@@ -140,6 +156,8 @@ if [ "$color_prompt" = yes ]; then
 else
     PROMPT='${debian_chroot:+($debian_chroot)}%n@%m:%~%# '
 fi
+
+unset color_prompt force_color_prompt
 
 # enable color support of ls, less and man, and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -263,7 +281,7 @@ export LESS=-R
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # Use history substring search
 #source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-source ~/.oh-my-zsh/custom/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+source ~/.config/oh-my-zsh/custom/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
 # bind UP and DOWN arrow keys to history substring search
 zmodload zsh/terminfo
 bindkey "$terminfo[kcuu1]" history-substring-search-up
@@ -380,18 +398,27 @@ source <(fzf --zsh)
 
 # some more ls aliases
 #alias ll='ls -l'
-alias cd..='cd ..'
 alias l='eza --group-directories-first --icons=auto'
+alias ld='eza -d --group-directories-first --icons=auto'
 alias la='eza -a --group-directories-first --icons=auto'
+alias lda='eza -ad --group-directories-first --icons=auto'
 alias ll="eza -alhg --group-directories-first --icons=auto"
+alias lld="eza -alhgd --group-directories-first --icons=auto"
 alias llt="eza -alhgT --group-directories-first --icons=auto"
+alias lldt="eza -alhgTd --group-directories-first --icons=auto"
 alias lll="eza -alhg --group-directories-first --total-size --icons=auto"
+alias llld="eza -alhgd --group-directories-first --total-size --icons=auto"
 alias lllt="eza -alhgT --group-directories-first --total-size --icons=auto"
+alias llltd="eza -alhgTd --group-directories-first --total-size --icons=auto"
 alias ff="fzf --style full --border --padding 1,2 --border-label ' FuzzyFind ' --input-label ' Input ' --header-label ' File Type ' --preview '~/.config/fzf/fzf-preview.sh {}' --bind 'result:transform-list-label: if [[ -z $FZF_QUERY ]]; then echo \" $FZF_MATCH_COUNT items \" else echo \" $FZF_MATCH_COUNT matches for [$FZF_QUERY] \" fi' --bind 'focus:transform-preview-label:[[ -n {} ]] && printf \" Previewing [%s] \" {}' --bind 'focus:+transform-header:file --brief {} || echo \"No file selected\"' --bind 'ctrl-r:change-list-label( Reloading the list )+reload(sleep 2; git ls-files)' --color 'border:#aaaaaa,label:#cccccc' --color 'preview-border:#9999cc,preview-label:#ccccff' --color 'list-border:#669966,list-label:#99cc99' --color 'input-border:#996666,input-label:#ffcccc' --color 'header-border:#6699cc,header-label:#99ccff'"
 alias bat="batcat --paging=never"
 alias batt="batcat -pp"
+alias cd..="cd .."
 
-source ~/powerlevel10k/powerlevel10k.zsh-theme
+source ~/.config/powerlevel10k/powerlevel10k/powerlevel10k.zsh-theme
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# To customize prompt, run `p10k configure` or edit ~/.config/powerlevel10k/.p10k.zsh.
+[[ ! -f ~/.config/powerlevel10k/.p10k.zsh ]] || source ~/.config/powerlevel10k/.p10k.zsh
+
+# Load any additional configuration options for the specific user
+[[ ! -f ~/.zshadditions ]] || source ~/.zshadditions
