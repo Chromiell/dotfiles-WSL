@@ -386,6 +386,60 @@ cpp() {
     rsync -avh --progress "$1" "$2"
 }
 
+# List Directories Types and icons
+ld() {
+    if (( $# )); then
+        eza --group-directories-first --icons=auto "$@"
+    else
+        eza -D --group-directories-first --icons=auto
+    fi
+}
+
+# List All Directories Types and icons
+lad() {
+    if (( $# )); then
+        eza -a --group-directories-first --icons=auto "$@"
+    else
+        eza -aD --group-directories-first --icons=auto
+    fi
+}
+
+# Long Listing of Directories first Types and icons
+lld() {
+    if (( $# )); then
+        eza -alhgd --group-directories-first --icons=auto "$@"
+    else
+        eza -alhgD --group-directories-first --icons=auto
+    fi
+}
+
+# Long Listing of Directories with their subdirectories, with Types and icons
+lldt() {
+    if (( $# )); then
+        eza -alhgTd --group-directories-first --icons=auto "$@"
+    else
+        eza -alhgTD --group-directories-first --icons=auto
+    fi
+}
+
+# Long Listing of Directories, with total size and icons
+llld() {
+    if (( $# )); then
+        eza -alhgd --group-directories-first --total-size --icons=auto "$@"
+    else
+        eza -alhgD --group-directories-first --total-size --icons=auto
+    fi
+}
+
+# Long Listing of Directories with their subdirectories, with Types, total size and icons
+llldt() {
+    if (( $# )); then
+        eza -alhgTd --group-directories-first --total-size --icons=auto "$@"
+    else
+        eza -alhgTD --group-directories-first --total-size --icons=auto
+    fi
+}
+
 # Set up fzf key bindings and fuzzy completion
 source /home/linuxbrew/.linuxbrew/opt/fzf/shell/key-bindings.zsh
 source /home/linuxbrew/.linuxbrew/opt/fzf/shell/completion.zsh
@@ -399,17 +453,11 @@ source <(fzf --zsh)
 # some more ls aliases
 #alias ll='ls -l'
 alias l='eza --group-directories-first --icons=auto'
-alias ld='eza -d --group-directories-first --icons=auto'
 alias la='eza -a --group-directories-first --icons=auto'
-alias lda='eza -ad --group-directories-first --icons=auto'
 alias ll="eza -alhg --group-directories-first --icons=auto"
-alias lld="eza -alhgd --group-directories-first --icons=auto"
 alias llt="eza -alhgT --group-directories-first --icons=auto"
-alias lldt="eza -alhgTd --group-directories-first --icons=auto"
 alias lll="eza -alhg --group-directories-first --total-size --icons=auto"
-alias llld="eza -alhgd --group-directories-first --total-size --icons=auto"
 alias lllt="eza -alhgT --group-directories-first --total-size --icons=auto"
-alias llltd="eza -alhgTd --group-directories-first --total-size --icons=auto"
 alias ff="fzf --style full --border --padding 1,2 --border-label ' FuzzyFind ' --input-label ' Input ' --header-label ' File Type ' --preview '~/.config/fzf/fzf-preview.sh {}' --bind 'result:transform-list-label: if [[ -z $FZF_QUERY ]]; then echo \" $FZF_MATCH_COUNT items \" else echo \" $FZF_MATCH_COUNT matches for [$FZF_QUERY] \" fi' --bind 'focus:transform-preview-label:[[ -n {} ]] && printf \" Previewing [%s] \" {}' --bind 'focus:+transform-header:file --brief {} || echo \"No file selected\"' --bind 'ctrl-r:change-list-label( Reloading the list )+reload(sleep 2; git ls-files)' --color 'border:#aaaaaa,label:#cccccc' --color 'preview-border:#9999cc,preview-label:#ccccff' --color 'list-border:#669966,list-label:#99cc99' --color 'input-border:#996666,input-label:#ffcccc' --color 'header-border:#6699cc,header-label:#99ccff'"
 alias bat="batcat --paging=never"
 alias batt="batcat -pp"
