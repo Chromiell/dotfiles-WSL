@@ -15,6 +15,7 @@
 !.config/eza/**
 !.config/composer/
 !.config/composer/*
+.config/composer/composer.lock
 !.config/php-cs-fixer/
 !.config/php-cs-fixer/**
 !.config/powerlevel10k/
