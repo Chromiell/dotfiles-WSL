@@ -389,7 +389,7 @@ frtext() {
     # -n causes line number to be printed
     # optional: -F treat search term as a literal, not a regular expression
     # optional: -l only print filenames and not the matching lines ex. grep -irl "$1" *
-    grep -iIHrn --color=always "$1" . | less
+    grep -iIHRn --color=always "$1" . | less
 }
 
 # Copy file with a progress bar
@@ -451,6 +451,11 @@ llltd() {
     fi
 }
 
+# Rewrite man command to use batcat instead of less
+man() {
+    command man "$@" | col -bx | batcat --language=man --style=plain
+}
+
 export HOMEBREW_EDITOR="micro"
 export GEMINI_MODEL="gemini-3-pro"
 export EDITOR="micro"
@@ -468,6 +473,7 @@ alias lll="eza -alhg --group-directories-first --total-size --icons=auto"
 alias lllt="eza -alhgT --group-directories-first --total-size --icons=auto"
 alias ff="fzf --style full --border --padding 1,2 --border-label ' FuzzyFind ' --input-label ' Input ' --header-label ' File Type ' --preview '~/.config/fzf/fzf-preview.sh {}' --bind 'result:transform-list-label: if [[ -z $FZF_QUERY ]]; then echo \" $FZF_MATCH_COUNT items \" else echo \" $FZF_MATCH_COUNT matches for [$FZF_QUERY] \" fi' --bind 'focus:transform-preview-label:[[ -n {} ]] && printf \" Previewing [%s] \" {}' --bind 'focus:+transform-header:file --brief {} || echo \"No file selected\"' --bind 'ctrl-r:change-list-label( Reloading the list )+reload(sleep 2; git ls-files)' --color 'border:#aaaaaa,label:#cccccc' --color 'preview-border:#9999cc,preview-label:#ccccff' --color 'list-border:#669966,list-label:#99cc99' --color 'input-border:#996666,input-label:#ffcccc' --color 'header-border:#6699cc,header-label:#99ccff'"
 alias bat="batcat --paging=never"
+alias batcatt="batcat --style=plain"
 alias batt="batcat -pp"
 alias cd..="cd .."
 
