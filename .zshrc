@@ -392,6 +392,16 @@ frtext() {
     grep -iIHRn --color=always "$1" . | less
 }
 
+# Searches for a specific filename only in the current directory
+ffile() {
+    find . -maxdepth 1 -iname "*$1*" 2>/dev/null | batcat  --style=plain
+}
+
+# Searches for a specific filename in the current directory and subdirectories
+frfile() {
+    find . -iname "*$1*" 2>/dev/null | batcat  --style=plain
+}
+
 # Copy file with a progress bar
 cpp() {
     rsync -avh --progress "$1" "$2"
