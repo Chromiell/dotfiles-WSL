@@ -108,8 +108,8 @@ if [ "$color_prompt" = yes ]; then
     VIRTUAL_ENV_DISABLE_PROMPT=1
 
     # enable syntax-highlighting
-    if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && [ "$color_prompt" = yes ]; then
-       . /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    if [ -f ~/.config/zsh-config/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && [ "$color_prompt" = yes ]; then
+       . ~/.config/zsh-config/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
         ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
         ZSH_HIGHLIGHT_STYLES[default]=none
         ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red,bold
@@ -188,8 +188,8 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # enable auto-suggestions based on the history
-if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-    . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+if [ -f ~/.config/zsh-config/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+    . ~/.config/zsh-config/zsh-autosuggestions/zsh-autosuggestions.zsh
     # change suggestion color
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
 fi
@@ -278,10 +278,10 @@ export LESS=-R
 ## Plugins section: Enable fish style features
 # Use syntax highlighting
 #source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.config/zsh-config/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # Use history substring search
 #source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-source ~/.config/oh-my-zsh/custom/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+source ~/.config/zsh-config/zsh-history-substring-search/zsh-history-substring-search.zsh
 # bind UP and DOWN arrow keys to history substring search
 zmodload zsh/terminfo
 bindkey "$terminfo[kcuu1]" history-substring-search-up
@@ -477,10 +477,10 @@ alias batcatt="batcat --style=plain"
 alias batt="batcat -pp"
 alias cd..="cd .."
 
-source ~/.config/powerlevel10k/powerlevel10k/powerlevel10k.zsh-theme
+source ~/.config/zsh-config/powerlevel10k/powerlevel10k/powerlevel10k.zsh-theme
 
-# To customize prompt, run `p10k configure` or edit ~/.config/powerlevel10k/.p10k.zsh.
-[[ ! -f ~/.config/powerlevel10k/.p10k.zsh ]] || source ~/.config/powerlevel10k/.p10k.zsh
+# To customize prompt, run `p10k configure` or edit ~/.config/zsh-config/powerlevel10k/.p10k.zsh.
+[[ ! -f ~/.config/zsh-config/powerlevel10k/.p10k.zsh ]] || source ~/.config/zsh-config/powerlevel10k/.p10k.zsh
 
 # Load any additional configuration options for the specific user
 [[ ! -f ~/.zshadditions ]] || source ~/.zshadditions
