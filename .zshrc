@@ -525,6 +525,109 @@ man() {
     esac
 }
 
+# Create a file of the appropriate size
+mkfile() {
+    # Defaults
+    local force=0
+    local raw=0
+    local printable=1
+    local mkdirp=0
+    local size_str=""
+    local outfile=""
+
+    # Parse flags
+    while [[ "$1" == -* ]]; do
+        case "$1" in
+            -f) force=1 ;;
+            -r) raw=1; printable=0 ;;   # raw bytes from urandom
+            -p) mkdirp=1 ;;             # create parent dirs
+            --) shift; break ;;
+            *)  echo "Unknown option: $1"; return 1 ;;
+        esac
+        shift
+    done
+
+    # Remaining args: size + filename
+    if [[ $# -ne 2 ]]; then
+        echo "Usage: mkfile [-f] [-r] [-p] <size> <filename>"
+        echo "  -f   overwrite existing file"
+        echo "  -r   raw bytes (no printable filtering)"
+        echo "  -p   create parent directories"
+        return 1
+    fi
+
+    size_str="$1"
+    outfile="$2"
+
+    # Validate size format: number + unit
+    if [[ ! "$size_str" =~ ^([0-9]+)([KkMmGgTt]|KiB|MiB|GiB|TiB)?$ ]]; then
+        echo "Error: size must be like 100M, 1G, 50K, 500, 100MiB, 1GiB"
+        return 1
+    fi
+
+    local num="${match[1]}"
+    local unit="${match[2]}"
+
+    # Convert to bytes
+    local size_bytes
+    case "$unit" in
+        K|k)      size_bytes=$(( num * 1024 )) ;;
+        M|m)      size_bytes=$(( num * 1024 * 1024 )) ;;
+        G|g)      size_bytes=$(( num * 1024 * 1024 * 1024 )) ;;
+        T|t)      size_bytes=$(( num * 1024 * 1024 * 1024 * 1024 )) ;;
+        KiB)      size_bytes=$(( num * 1024 )) ;;
+        MiB)      size_bytes=$(( num * 1024 * 1024 )) ;;
+        GiB)      size_bytes=$(( num * 1024 * 1024 * 1024 )) ;;
+        TiB)      size_bytes=$(( num * 1024 * 1024 * 1024 * 1024 )) ;;
+        "")       size_bytes=$num ;;
+    esac
+
+    # Zero-size → touch
+    if (( size_bytes == 0 )); then
+        if [[ -e "$outfile" && $force -eq 0 ]]; then
+            echo "Error: '$outfile' exists. Use -f to overwrite."
+            return 1
+        fi
+        [[ $mkdirp -eq 1 ]] && mkdir -p -- "$(dirname -- "$outfile")"
+        touch "$outfile"
+        return 0
+    fi
+
+    # Safety: prevent overwriting unless -f
+    if [[ -e "$outfile" && $force -eq 0 ]]; then
+        echo "Error: '$outfile' exists. Use -f to overwrite."
+        return 1
+    fi
+
+    # Create parent directories if requested
+    if [[ $mkdirp -eq 1 ]]; then
+        mkdir -p -- "$(dirname -- "$outfile")"
+    fi
+
+    # Choose data source
+    local cmd
+    if (( raw == 1 )); then
+        cmd="cat /dev/urandom"
+    else
+        cmd="tr -dc '[:print:]' < /dev/urandom"
+    fi
+
+    # Progress indicator for large files
+    local start_time=$SECONDS
+    echo "Creating file '$outfile' (${size_bytes} bytes)..."
+
+    # Use pv if available for progress
+    if command -v pv >/dev/null 2>&1; then
+        eval "$cmd" | pv -s "$size_bytes" | head -c "$size_bytes" > "$outfile"
+    else
+        # Fallback: no progress bar
+        eval "$cmd" | head -c "$size_bytes" > "$outfile"
+    fi
+
+    local elapsed=$(( SECONDS - start_time ))
+    echo "Done in ${elapsed}s"
+}
+
 export HOMEBREW_EDITOR="micro"
 export GEMINI_MODEL="gemini-3-pro"
 export EDITOR="micro"
