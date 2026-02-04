@@ -344,6 +344,15 @@ alias ls='ls $LS_OPTIONS'
 alias fd='fdfind'
 #Fine importazione manjaro-zsh-configuration
 
+# Detect external pager program (prefer external `batcat`, then `bat`, else `less`)
+if whence -p batcat >/dev/null 2>&1; then
+    _PAGER_PROG=batcat
+elif whence -p bat >/dev/null 2>&1; then
+    _PAGER_PROG=bat
+else
+    _PAGER_PROG=less
+fi
+
 #Custom functions
 # Extracts any archive(s) (if unp isn't installed)
 extract() {
@@ -377,7 +386,17 @@ ftext() {
     # -n causes line number to be printed
     # optional: -F treat search term as a literal, not a regular expression
     # optional: -l only print filenames and not the matching lines ex. grep -irl "$1" *
-    find . -maxdepth 1 -type f -print0 | xargs -0 -r grep -iIHn --color=always -- "$1" | less
+    case "${_PAGER_PROG}" in
+        batcat)
+            find . -maxdepth 1 -type f -print0 | xargs -0 -r grep -iIHn --color=always -- "$1" | batcat --style=plain -l log
+            ;;
+        bat)
+            find . -maxdepth 1 -type f -print0 | xargs -0 -r grep -iIHn --color=always -- "$1" | bat --style=plain -l log
+            ;;
+        *)
+            find . -maxdepth 1 -type f -print0 | xargs -0 -r grep -iIHn --color=always -- "$1" | less
+            ;;
+    esac
 }
 
 # Searches for text in all files in the current folder recursively
@@ -389,17 +408,47 @@ frtext() {
     # -n causes line number to be printed
     # optional: -F treat search term as a literal, not a regular expression
     # optional: -l only print filenames and not the matching lines ex. grep -irl "$1" *
-    grep -iIHRn --color=always "$1" . | less
+    case "${_PAGER_PROG}" in
+        batcat)
+            grep -iIHRn --color=always "$1" . | batcat --style=plain -l log
+            ;;
+        bat)
+            grep -iIHRn --color=always "$1" . | bat --style=plain -l log
+            ;;
+        *)
+            grep -iIHRn --color=always "$1" . | less
+            ;;
+    esac
 }
 
 # Searches for a specific filename only in the current directory
 ffile() {
-    find . -maxdepth 1 -iname "*$1*" 2>/dev/null | batcat  --style=plain
+    case "${_PAGER_PROG}" in
+        batcat)
+            find . -maxdepth 1 -iname "*$1*" 2>/dev/null | batcat --style=plain -l log
+            ;;
+        bat)
+            find . -maxdepth 1 -iname "*$1*" 2>/dev/null | bat --style=plain -l log
+            ;;
+        *)
+            find . -maxdepth 1 -iname "*$1*" 2>/dev/null | less
+            ;;
+    esac
 }
 
 # Searches for a specific filename in the current directory and subdirectories
 frfile() {
-    find . -iname "*$1*" 2>/dev/null | batcat  --style=plain
+    case "${_PAGER_PROG}" in
+        batcat)
+            find . -iname "*$1*" 2>/dev/null | batcat --style=plain -l log
+            ;;
+        bat)
+            find . -iname "*$1*" 2>/dev/null | bat --style=plain -l log
+            ;;
+        *)
+            find . -iname "*$1*" 2>/dev/null | less
+            ;;
+    esac
 }
 
 # Copy file with a progress bar
@@ -463,7 +512,17 @@ llltd() {
 
 # Rewrite man command to use batcat instead of less
 man() {
-    command man "$@" | col -bx | batcat --language=man --style=plain
+    case "${_PAGER_PROG}" in
+        batcat)
+            command man "$@" | col -bx | batcat --language=man --style=plain
+            ;;
+        bat)
+            command man "$@" | col -bx | bat --language=man --style=plain
+            ;;
+        *)
+            command man "$@" | col -bx | less
+            ;;
+    esac
 }
 
 export HOMEBREW_EDITOR="micro"
@@ -482,10 +541,18 @@ alias llt="eza -alhgT --group-directories-first --icons=auto"
 alias lll="eza -alhg --group-directories-first --total-size --icons=auto"
 alias lllt="eza -alhgT --group-directories-first --total-size --icons=auto"
 alias ff="fzf --style full --border --padding 1,2 --border-label ' FuzzyFind ' --input-label ' Input ' --header-label ' File Type ' --preview '~/.config/fzf/fzf-preview.sh {}' --bind 'result:transform-list-label: if [[ -z $FZF_QUERY ]]; then echo \" $FZF_MATCH_COUNT items \" else echo \" $FZF_MATCH_COUNT matches for [$FZF_QUERY] \" fi' --bind 'focus:transform-preview-label:[[ -n {} ]] && printf \" Previewing [%s] \" {}' --bind 'focus:+transform-header:file --brief {} || echo \"No file selected\"' --bind 'ctrl-r:change-list-label( Reloading the list )+reload(sleep 2; git ls-files)' --color 'border:#aaaaaa,label:#cccccc' --color 'preview-border:#9999cc,preview-label:#ccccff' --color 'list-border:#669966,list-label:#99cc99' --color 'input-border:#996666,input-label:#ffcccc' --color 'header-border:#6699cc,header-label:#99ccff'"
-alias bat="batcat --paging=never"
-alias batcatt="batcat --style=plain"
-alias batt="batcat -pp"
 alias cd..="cd .."
+
+if whence -p batcat >/dev/null 2>&1; then
+    alias bat="batcat --paging=never"
+    alias batcatt="batcat --style=plain"
+    alias batt="batcat -pp"
+elif whence -p bat >/dev/null 2>&1; then
+    alias bat="bat --paging=never"
+    alias batcatt="bat --style=plain"
+    alias batcat="bat"
+    alias batt="bat -pp"
+fi
 
 source ~/.config/zsh-config/powerlevel10k/powerlevel10k/powerlevel10k.zsh-theme
 
