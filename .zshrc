@@ -395,13 +395,13 @@ ftext() {
 
         case "${_PAGER_PROG}" in
             batcat)
-                grep -iIHn --color=always -- "$1" -- "$2" | batcat --style=plain
+                grep -iIHn --color=always -- "$1" "$2" | batcat --style=plain
                 ;;
             bat)
-                grep -iIHn --color=always -- "$1" -- "$2" | bat --style=plain
+                grep -iIHn --color=always -- "$1" "$2" | bat --style=plain
                 ;;
             *)
-                grep -iIHn --color=always -- "$1" -- "$2" | less
+                grep -iIHn --color=always -- "$1" "$2" | less
                 ;;
         esac
         return $?
