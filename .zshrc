@@ -379,19 +379,41 @@ extract() {
 }
 
 # Searches for text in all files in the current folder
+# Usage: ftext <pattern> [file]
 ftext() {
-    # -i case-insensitive
-    # -I ignore binary files
-    # -H causes filename to be printed
-    # -n causes line number to be printed
-    # optional: -F treat search term as a literal, not a regular expression
-    # optional: -l only print filenames and not the matching lines ex. grep -irl "$1" *
+    if [[ -z "$1" ]]; then
+        echo "Usage: ftext <pattern> [file]"
+        return 1
+    fi
+
+    # If a second argument is provided and is a regular file, search only that file
+    if [[ -n "$2" ]]; then
+        if [[ ! -f "$2" ]]; then
+            echo "File '$2' not found" >&2
+            return 1
+        fi
+
+        case "${_PAGER_PROG}" in
+            batcat)
+                grep -iIHn --color=always -- "$1" -- "$2" | batcat --style=plain
+                ;;
+            bat)
+                grep -iIHn --color=always -- "$1" -- "$2" | bat --style=plain
+                ;;
+            *)
+                grep -iIHn --color=always -- "$1" -- "$2" | less
+                ;;
+        esac
+        return $?
+    fi
+
+    # Otherwise, search all regular files in the current directory (non-recursive)
     case "${_PAGER_PROG}" in
         batcat)
-            find . -maxdepth 1 -type f -print0 | xargs -0 -r grep -iIHn --color=always -- "$1" | batcat --style=plain -l log
+            find . -maxdepth 1 -type f -print0 | xargs -0 -r grep -iIHn --color=always -- "$1" | batcat --style=plain
             ;;
         bat)
-            find . -maxdepth 1 -type f -print0 | xargs -0 -r grep -iIHn --color=always -- "$1" | bat --style=plain -l log
+            find . -maxdepth 1 -type f -print0 | xargs -0 -r grep -iIHn --color=always -- "$1" | bat --style=plain
             ;;
         *)
             find . -maxdepth 1 -type f -print0 | xargs -0 -r grep -iIHn --color=always -- "$1" | less
@@ -410,10 +432,10 @@ frtext() {
     # optional: -l only print filenames and not the matching lines ex. grep -irl "$1" *
     case "${_PAGER_PROG}" in
         batcat)
-            grep -iIHRn --color=always "$1" . | batcat --style=plain -l log
+            grep -iIHRn --color=always "$1" . | batcat --style=plain
             ;;
         bat)
-            grep -iIHRn --color=always "$1" . | bat --style=plain -l log
+            grep -iIHRn --color=always "$1" . | bat --style=plain
             ;;
         *)
             grep -iIHRn --color=always "$1" . | less
@@ -425,13 +447,13 @@ frtext() {
 ffile() {
     case "${_PAGER_PROG}" in
         batcat)
-            find . -maxdepth 1 -iname "*$1*" 2>/dev/null | batcat --style=plain -l log
+            find . -maxdepth 1 -iname "*$1*" 2>/dev/null | grep -i --color=always "$1" | batcat --style=plain
             ;;
         bat)
-            find . -maxdepth 1 -iname "*$1*" 2>/dev/null | bat --style=plain -l log
+            find . -maxdepth 1 -iname "*$1*" 2>/dev/null | grep -i --color=always "$1" | bat --style=plain
             ;;
         *)
-            find . -maxdepth 1 -iname "*$1*" 2>/dev/null | less
+            find . -maxdepth 1 -iname "*$1*" 2>/dev/null | grep -i --color=always "$1" | less
             ;;
     esac
 }
@@ -440,13 +462,13 @@ ffile() {
 frfile() {
     case "${_PAGER_PROG}" in
         batcat)
-            find . -iname "*$1*" 2>/dev/null | batcat --style=plain -l log
+            find . -iname "*$1*" 2>/dev/null | grep -i --color=always "$1" | batcat --style=plain
             ;;
         bat)
-            find . -iname "*$1*" 2>/dev/null | bat --style=plain -l log
+            find . -iname "*$1*" 2>/dev/null | grep -i --color=always "$1" | bat --style=plain
             ;;
         *)
-            find . -iname "*$1*" 2>/dev/null | less
+            find . -iname "*$1*" 2>/dev/null | grep -i --color=always "$1" | less
             ;;
     esac
 }
