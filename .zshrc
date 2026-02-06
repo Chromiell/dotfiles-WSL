@@ -681,11 +681,11 @@ fi
 
 source ~/.config/zsh-config/powerlevel10k/powerlevel10k/powerlevel10k.zsh-theme
 
-# Required by VSCode's agents terminal integration with Zsh
-[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
-
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh-config/powerlevel10k/.p10k.zsh.
 [[ ! -f ~/.config/zsh-config/powerlevel10k/.p10k.zsh ]] || source ~/.config/zsh-config/powerlevel10k/.p10k.zsh
+
+# Required by VSCode's agents terminal integration with Zsh
+[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
 
 # Load any additional configuration options for the specific user
 [[ ! -f ~/.zshadditions ]] || source ~/.zshadditions
