@@ -152,4 +152,4 @@ return $config->setRiskyAllowed(true)->setRules([
     'statement_indentation' => [
         'stick_comment_to_next_continuous_control_statement' => true,
     ],
-])->setIndent('    ')->setLineEnding("\r\n");
+])->setIndent('    ')->setLineEnding("\n");
