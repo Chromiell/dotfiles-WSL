@@ -4,7 +4,7 @@ ini_set('memory_limit', '256M');
 
 $config = new PhpCsFixer\Config();
 
-return $config->setRiskyAllowed(true)->setRules([
+return $config->setRiskyAllowed(false)->setRules([
     'array_indentation'                           => true,
     'array_syntax'                                => ['syntax' => 'short'],
     'blank_line_after_namespace'                  => true,
@@ -31,7 +31,7 @@ return $config->setRiskyAllowed(true)->setRules([
     'magic_method_casing'                         => true, // added from Symfony
     'magic_constant_casing'                       => true,
     'native_function_casing'                      => true,
-    'no_alias_functions'                          => true,
+    'no_alias_functions'                          => false, // disabled as "risky"
     'no_blank_lines_after_class_opening'          => true,
     'no_blank_lines_after_phpdoc'                 => true,
     'no_closing_tag'                              => true,
@@ -49,7 +49,7 @@ return $config->setRiskyAllowed(true)->setRules([
     'no_trailing_whitespace'                      => true,
     'no_whitespace_in_blank_line'                 => true,
     'no_trailing_whitespace_in_comment'           => true,
-    'no_unreachable_default_argument_value'       => true,
+    'no_unreachable_default_argument_value'       => false, // disabled as "risky"
     'no_useless_return'                           => true,
     'no_whitespace_before_comma_in_array'         => true,
     'no_whitespace_in_blank_line'                 => true,
@@ -57,7 +57,7 @@ return $config->setRiskyAllowed(true)->setRules([
     'not_operator_with_successor_space'           => true,
     'object_operator_without_whitespace'          => true,
     'ordered_imports'                             => ['sort_algorithm' => 'alpha'],
-    'psr_autoloading'                             => true,
+    'psr_autoloading'                             => false, // disabled as "risky"
     'phpdoc_indent'                               => true,
     'phpdoc_inline_tag_normalizer'                => true,
     'phpdoc_no_access'                            => true,
@@ -71,7 +71,7 @@ return $config->setRiskyAllowed(true)->setRules([
     'phpdoc_trim'                                 => true,
     'phpdoc_types'                                => true,
     'phpdoc_var_without_name'                     => true,
-    'self_accessor'                               => true,
+    'self_accessor'                               => false, // disabled as "risky"
     'short_scalar_cast'                           => true,
     'simplified_null_return'                      => false, // disabled as "risky"
     'single_blank_line_at_eof'                    => true,
