@@ -9,7 +9,7 @@ sudo apt install zsh fd-find ripgrep bat rsync pv micro rar gzip tar unzip 7zip 
 
 You should also install the `fzf` and `eza` packages.
 
-> **_NOTE:_** the `fzf` and `eza` packages of Ubuntu use old versions, it's better to install their latest versions from Brew.
+> **_NOTE:_** the `fzf` and `eza` packages of Ubuntu use very old versions, it's better to install their latest versions, you can get them from their official Github page, grab the executable and put the executable file inside `~/.local/bin/` (if the path does not exist crate the directories, the path will be automatically added to your `$PATH`).
 
 and git clone this repo in your `$HOME` directory.
 
