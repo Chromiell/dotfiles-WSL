@@ -361,6 +361,7 @@ extract() {
             case $archive in
             *.tar.bz2) tar xvjf $archive ;;
             *.tar.gz) tar xvzf $archive ;;
+            *.tar.xz) tar xvJf $archive ;;
             *.bz2) bunzip2 $archive ;;
             *.rar) rar x $archive ;;
             *.gz) gunzip $archive ;;
