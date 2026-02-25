@@ -113,7 +113,7 @@ return $config->setRiskyAllowed(false)->setRules([
         'single_line'                         => true,
     ],
     'concat_space' => [
-        'spacing' => 'none',
+        'spacing' => 'one',
     ],
     'method_argument_space' => [
         'on_multiline' => 'ignore',
