@@ -632,7 +632,7 @@ mkfile() {
     if (( raw == 1 )); then
         cmd="cat /dev/urandom"
     else
-        cmd="tr -dc '[:print:]' < /dev/urandom"
+        cmd="tr -dc '[:alnum:]' < /dev/urandom"
     fi
 
     # Progress indicator for large files
