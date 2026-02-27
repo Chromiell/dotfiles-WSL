@@ -548,12 +548,13 @@ man() {
     esac
 }
 
-# Create a file of the appropriate size
-mkfile() {
+# Create a file of the appropriate size or a stream of random bytes to stdout, with options for raw bytes, printable characters, and progress indication
+mktext() {
     # Defaults
     local force=0
     local raw=0
     local printable=1
+    local symbols=0
     local mkdirp=0
     local size_str=""
     local outfile=""
@@ -563,6 +564,7 @@ mkfile() {
         case "$1" in
             -f) force=1 ;;
             -r) raw=1; printable=0 ;;   # raw bytes from urandom
+            -s) symbols=1 ;;            # include allowed symbols in printable output
             -p) mkdirp=1 ;;             # create parent dirs
             --) shift; break ;;
             *)  echo "Unknown option: $1"; return 1 ;;
@@ -570,17 +572,22 @@ mkfile() {
         shift
     done
 
-    # Remaining args: size + filename
-    if [[ $# -ne 2 ]]; then
-        echo "Usage: mkfile [-f] [-r] [-p] <size> <filename>"
+    # Remaining args: size [+ optional filename]
+    if [[ $# -lt 1 || $# -gt 2 ]]; then
+        echo "Usage: mktext [-f] [-r] [-p] <size> [<filename>]"
         echo "  -f   overwrite existing file"
         echo "  -r   raw bytes (no printable filtering)"
+        echo "  -s   include symbols !@#$%^&* in printable output"
         echo "  -p   create parent directories"
         return 1
     fi
 
     size_str="$1"
-    outfile="$2"
+    if [[ $# -eq 2 ]]; then
+        outfile="$2"
+    else
+        outfile=""  # empty -> write to stdout
+    fi
 
     # Validate size format: number + unit
     if [[ ! "$size_str" =~ ^([0-9]+)([KkMmGgTt]|KiB|MiB|GiB|TiB)?$ ]]; then
@@ -605,25 +612,29 @@ mkfile() {
         "")       size_bytes=$num ;;
     esac
 
-    # Zero-size → touch
+    # Zero-size -> touch if outfile set, otherwise nothing
     if (( size_bytes == 0 )); then
-        if [[ -e "$outfile" && $force -eq 0 ]]; then
-            echo "Error: '$outfile' exists. Use -f to overwrite."
-            return 1
+        if [[ -n "$outfile" ]]; then
+            if [[ -e "$outfile" && $force -eq 0 ]]; then
+                echo "Error: '$outfile' exists. Use -f to overwrite."
+                return 1
+            fi
+            [[ $mkdirp -eq 1 ]] && mkdir -p -- "$(dirname -- "$outfile")"
+            touch "$outfile"
+            return 0
+        else
+            return 0
         fi
-        [[ $mkdirp -eq 1 ]] && mkdir -p -- "$(dirname -- "$outfile")"
-        touch "$outfile"
-        return 0
     fi
 
-    # Safety: prevent overwriting unless -f
-    if [[ -e "$outfile" && $force -eq 0 ]]; then
+    # Safety: prevent overwriting unless -f (only when writing to a file)
+    if [[ -n "$outfile" && -e "$outfile" && $force -eq 0 ]]; then
         echo "Error: '$outfile' exists. Use -f to overwrite."
         return 1
     fi
 
     # Create parent directories if requested
-    if [[ $mkdirp -eq 1 ]]; then
+    if [[ -n "$outfile" && $mkdirp -eq 1 ]]; then
         mkdir -p -- "$(dirname -- "$outfile")"
     fi
 
@@ -632,23 +643,35 @@ mkfile() {
     if (( raw == 1 )); then
         cmd="cat /dev/urandom"
     else
-        cmd="tr -dc '[:alnum:]' < /dev/urandom"
+        if (( symbols == 1 )); then
+            cmd="tr -dc '[:alnum:]!@#$%^&*' < /dev/urandom"
+        else
+            cmd="tr -dc '[:alnum:]' < /dev/urandom"
+        fi
     fi
 
     # Progress indicator for large files
     local start_time=$SECONDS
-    echo "Creating file '$outfile' (${size_bytes} bytes)..."
-
-    # Use pv if available for progress
-    if command -v pv >/dev/null 2>&1; then
-        eval "$cmd" | pv -s "$size_bytes" | head -c "$size_bytes" > "$outfile"
+    # Only show progress and informational message when writing to a file
+    if [[ -n "$outfile" ]]; then
+        echo "Creating file '$outfile' (${size_bytes} bytes)..."
+        if command -v pv >/dev/null 2>&1; then
+            eval "$cmd" | pv -s "$size_bytes" | head -c "$size_bytes" > "$outfile"
+        else
+            eval "$cmd" | head -c "$size_bytes" > "$outfile"
+        fi
     else
-        # Fallback: no progress bar
-        eval "$cmd" | head -c "$size_bytes" > "$outfile"
+        # Quiet mode for stdout: emit only the random data to stdout
+        eval "$cmd" | head -c "$size_bytes"
     fi
 
     local elapsed=$(( SECONDS - start_time ))
-    echo "Done in ${elapsed}s"
+    # Print completion to stderr when writing to stdout so stdout remains clean
+    if [[ -n "$outfile" ]]; then
+        echo "Done in ${elapsed}s"
+    else
+        printf '\nDone in %ss\n' "${elapsed}" >&2
+    fi
 }
 
 export GEMINI_MODEL="gemini-3-pro"
